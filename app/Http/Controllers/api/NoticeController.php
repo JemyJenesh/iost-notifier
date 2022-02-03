@@ -40,6 +40,8 @@ class NoticeController extends Controller
     // echo "<pre>";
     // print_r($this->results);
 
+    $this->scrapNotice();
+
     return Notice::latest()->paginate(20);
   }
 
