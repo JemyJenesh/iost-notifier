@@ -40,7 +40,7 @@ class NoticeController extends Controller
     // echo "<pre>";
     // print_r($this->results);
 
-    return Notice::paginate(20);
+    return Notice::latest()->paginate(20);
   }
 
   /**
@@ -96,6 +96,16 @@ class NoticeController extends Controller
     $page = $client->request('GET', $url);
 
     $page->filter('.feature-content div.mt-3')->each(function ($item) {
+      $this->results[] = [
+        'title' => $item->filter('a b')->text(),
+        'link' => $item->filter('a')->attr('href'),
+        'date' => $item->filter('small')->text()
+      ];
+    });
+
+    $reveresed = array_reverse($this->results);
+
+    foreach ($reveresed as $item) {
       Notice::updateOrCreate(
         [
           'title' => $item->filter('a b')->text(),
@@ -103,6 +113,6 @@ class NoticeController extends Controller
         ],
         ['date' => $item->filter('small')->text()]
       );
-    });
+    }
   }
 }
