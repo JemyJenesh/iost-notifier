@@ -87,4 +87,22 @@ class NoticeController extends Controller
   {
     //
   }
+
+  public function scrapNotice()
+  {
+    $client = new Client();
+    $url = 'https://www.tuiost.edu.np/notices';
+
+    $page = $client->request('GET', $url);
+
+    $page->filter('.feature-content div.mt-3')->each(function ($item) {
+      Notice::updateOrCreate(
+        [
+          'title' => $item->filter('a b')->text(),
+          'link' => $item->filter('a')->attr('href')
+        ],
+        ['date' => $item->filter('small')->text()]
+      );
+    });
+  }
 }

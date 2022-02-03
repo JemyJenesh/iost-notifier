@@ -20,3 +20,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/notices', [NoticeController::class, 'index']);
+Route::get('/notices/scrap', [NoticeController::class, 'scrapNotice']);
