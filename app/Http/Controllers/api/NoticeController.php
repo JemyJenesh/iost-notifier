@@ -42,7 +42,7 @@ class NoticeController extends Controller
 
     $this->scrapNotice();
 
-    return Notice::latest()->paginate(20);
+    return Notice::orderBy('id', 'DESC')->paginate(20);
   }
 
   /**
