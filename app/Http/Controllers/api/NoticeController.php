@@ -110,10 +110,12 @@ class NoticeController extends Controller
     foreach ($reveresed as $item) {
       Notice::updateOrCreate(
         [
-          'title' => $item['title'],
-          'link' => $item['link']
+          'title' => $item['title']
         ],
-        ['date' => $item['date']]
+        [
+          'date' => $item['date'],
+          'link' => $item['link']
+        ]
       );
     }
   }
